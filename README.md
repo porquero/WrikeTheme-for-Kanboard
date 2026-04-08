@@ -78,7 +78,7 @@ Replaces Customizer, EssentialTheme, and Moon with a single self-contained plugi
 
    ```bash
    cd /path/to/kanboard/plugins
-   git clone [https://github.com/your-user/WrikeTheme](https://github.com/porquero/WrikeTheme-for-Kanboard)
+   git clone https://github.com/porquero/WrikeTheme-for-Kanboard
    ```
 
 2. If you were using **Customizer**, **EssentialTheme**, or **Moon** — disable them in  
