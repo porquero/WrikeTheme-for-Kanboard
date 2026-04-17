@@ -150,15 +150,15 @@ def hello():
 
 ## Replacing Legacy Plugins
 
-WrikeTheme is a drop-in replacement for the combination of:
+WrikeTheme was built by studying the source code and architecture of three existing Kanboard plugins, which served as direct references and inspiration:
 
-| Legacy plugin | Feature covered by WrikeTheme |
+| Legacy plugin | What was referenced |
 |---|---|
-| **Customizer** | Logo, header color, login branding, settings UI |
-| **EssentialTheme** | Complete CSS theme |
-| **Moon** | Prism.js syntax highlighting, logo in header, header color via config |
+| **[Customizer](https://github.com/creecros/Customizer)** | Logo injection, header color config, login branding approach, settings UI pattern |
+| **[EssentialTheme](https://github.com/JamesEadon/EssentialTheme)** | Full CSS theme structure and Kanboard selector conventions |
+| **[Moon](https://github.com/functionland/moon)** | Prism.js integration, logo in header, config-file-based theming, layout template overrides |
 
-Disable all three before enabling WrikeTheme.
+WrikeTheme combines all of their features into a single self-contained plugin — disable all three before enabling WrikeTheme to avoid CSS conflicts.
 
 ---
 
@@ -221,6 +221,8 @@ MIT — see [LICENSE](LICENSE) for details.
 
 ## Credits
 
+- Built with [Claude](https://claude.ai) by [Anthropic](https://www.anthropic.com)
+- Reference plugins: [Customizer](https://github.com/creecros/Customizer), [EssentialTheme](https://github.com/JamesEadon/EssentialTheme), [Moon](https://github.com/functionland/moon)
 - Syntax highlighting: [Prism.js](https://prismjs.com/) by Lea Verou
 - Color system inspired by [Wrike](https://www.wrike.com)
 - Plugin architecture based on the [Kanboard Plugin Guide](https://docs.kanboard.org/en/latest/plugins/index.html)
