@@ -1,7 +1,16 @@
 <?php
-// Night mode: read from DB (persists across devices) with localStorage as client fallback
+/*
+ * Night mode persistence hierarchy (most to least reliable):
+ *   1. Cookie  — written by JS on this browser on toggle, read by PHP on every
+ *                subsequent request.  Works even when the DB write fails.
+ *   2. DB      — cross-device: AJAX writes it; read here when no cookie exists
+ *                (e.g. first load on a new device).
+ *   3. Default — '0' (light mode).
+ */
 $nightMode = '0';
-if (isset($this->userSession) && $this->userSession->isLogged()) {
+if (isset($_COOKIE['wrikeThemeNightMode'])) {
+    $nightMode = ($_COOKIE['wrikeThemeNightMode'] === '1') ? '1' : '0';
+} elseif (isset($this->userSession) && $this->userSession->isLogged()) {
     $nightMode = $this->userMetadataModel->get(
         $this->userSession->getId(),
         'wriketheme_night_mode',

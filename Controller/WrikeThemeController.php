@@ -41,7 +41,14 @@ class WrikeThemeController extends BaseController
 
     /**
      * Toggle night mode for the current user (called via AJAX).
-     * Stores preference in userMetadataModel so it persists across devices.
+     * Stores preference in user_has_metadata so it persists across devices.
+     *
+     * NOTE: We bypass userMetadataModel->save() intentionally.
+     * Kanboard's MetadataModel::save() calls exists() internally, and exists()
+     * returns TRUE even when no row is present in the table (confirmed bug with
+     * PHP 8.3 + SQLite). This causes save() to always attempt an UPDATE that
+     * silently writes nothing. We use a COUNT-based check + raw PicoDb calls
+     * instead, which are not affected by the exists() regression.
      */
     public function toggleNight()
     {
@@ -49,7 +56,27 @@ class WrikeThemeController extends BaseController
         $current = $this->userMetadataModel->get($userId, 'wriketheme_night_mode', '0');
         $newVal  = ($current === '1') ? '0' : '1';
 
-        $this->userMetadataModel->save($userId, ['wriketheme_night_mode' => $newVal]);
+        $rowExists = $this->db
+            ->table('user_has_metadata')
+            ->eq('user_id', $userId)
+            ->eq('name', 'wriketheme_night_mode')
+            ->count() > 0;
+
+        if ($rowExists) {
+            $this->db
+                ->table('user_has_metadata')
+                ->eq('user_id', $userId)
+                ->eq('name', 'wriketheme_night_mode')
+                ->update(['value' => $newVal]);
+        } else {
+            $this->db
+                ->table('user_has_metadata')
+                ->insert([
+                    'user_id' => $userId,
+                    'name'    => 'wriketheme_night_mode',
+                    'value'   => $newVal,
+                ]);
+        }
 
         $this->response->json(['night_mode' => $newVal]);
     }
