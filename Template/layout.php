@@ -34,7 +34,7 @@ if (isset($_COOKIE['wrikeThemeNightMode'])) {
 
         <?= $this->asset->colorCss() ?>
         <?= $this->asset->css('assets/css/vendor.min.css') ?>
-        <?= $this->asset->css('assets/css/app.min.css') ?>
+        <?= $this->asset->css('assets/css/auto.min.css') ?>
         <?= $this->asset->css('assets/css/print.min.css', true, 'print') ?>
         <?= $this->asset->customCss() ?>
 

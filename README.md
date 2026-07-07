@@ -5,7 +5,7 @@ Replaces Customizer, EssentialTheme, and Moon with a single self-contained plugi
 
 ![License](https://img.shields.io/badge/license-MIT-blue)
 ![Kanboard](https://img.shields.io/badge/Kanboard-%3E%3D1.0.48-brightgreen)
-![Version](https://img.shields.io/badge/version-1.1.2-orange)
+![Version](https://img.shields.io/badge/version-1.1.3-orange)
 
 ---
 
@@ -195,6 +195,9 @@ WrikeTheme/
 ---
 
 ## Changelog
+
+### 1.1.3
+- **Fix:** `layout.php` now loads `assets/css/auto.min.css` instead of the removed `assets/css/app.min.css`. Kanboard renamed this file in ≥ 1.2.51; the old reference produced a `filemtime(): stat failed` PHP warning on every page load.
 
 ### 1.1.2
 - **Fix:** Night mode now persists correctly across page navigations. Root cause: the DB write failure (see 1.1.1) caused `layout.php` to output `data-night-mode="0"`, which the JS then used to overwrite `localStorage`, destroying the only remaining client-side fallback. Fix: JS now also writes a cookie (`wrikeThemeNightMode`) on every toggle. `layout.php` reads the cookie first — bypassing the DB entirely for same-browser persistence. The DB write (AJAX) remains as a best-effort layer for cross-device sync.
